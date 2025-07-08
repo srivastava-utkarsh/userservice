@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: userservice
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.value.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: userservice
+    topic:
+      name: ${KAFKA_TOPIC}
+  config:
+    import: optional:file:userservice-dev.env[.properties]
+server:
+  port: 9899
